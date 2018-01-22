@@ -1,0 +1,20 @@
+:root {
+  /* COLOR PALLET  */
+  --color-primairy: #ffeb3b;
+  --color-primairy-light: #fff9c4;
+  --color-primairy-dark: /**/;
+  --color-secundairy: #d2d2d2;
+  --color-secundairy-light: /**/;
+  --color-secundairy-dark: /**/;
+  --color-text: #333;
+  --color-link: #333;
+  --color-required: #e3473f;
+  --color-required-light: #ffc8a8;
+  --color-background: #fffddb;
+
+  /* TEXT VARIATIONS */
+  --font-title: vollkorn, serif;
+  --font-text: vollkorn, serif;
+  --fontWeight-regular: 400;
+  --fontWeight-bold: 700;
+}

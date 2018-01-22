@@ -1,2 +1,2 @@
-# major3-weekvandemobiliteit
-eindwerk devine 2017-2018
+#Major Atelier 3
+"Week van de Mobiliteit"
