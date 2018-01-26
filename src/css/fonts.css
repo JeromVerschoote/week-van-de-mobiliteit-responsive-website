@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'cocogoose';
+  src: url('../assets/fonts/cocogoose/cocogoose.woff2') format('woff2'), url('../assets/fonts/cocogoose/cocogoose.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gotham bolt';
+  src: url('../assets/fonts/gotham/gothamBolt.woff2') format('woff2'), url('../assets/fonts/otham/gothamBolt.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gotham thin';
+  src: url('../assets/fonts/gotham/gothamThin.woff2') format('woff2'), url('../assets/fonts/otham/gothamThin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}

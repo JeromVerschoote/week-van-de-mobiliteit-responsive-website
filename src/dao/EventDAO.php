@@ -3,6 +3,7 @@ require_once __DIR__ . '/DAO.php';
 class EventDAO extends DAO {
 
   public function search($conditions = array()) {
+
     $sql = "SELECT DISTINCT
       ma3_auto_events.*
       FROM `ma3_auto_events`
@@ -32,6 +33,8 @@ class EventDAO extends DAO {
         $columnName = 'ma3_auto_tags.id';
       } else if($columnName == 'tag') {
         $columnName = 'ma3_auto_tags.tag';
+      } else if($columnName == 'id') {
+        $columnName = 'ma3_auto_events.id';
       }
       //handle functions
       if(!empty($condition['function'])) {
@@ -69,7 +72,29 @@ class EventDAO extends DAO {
         $row['organisers'] = $organisersByEventId[$row['id']];
       }
     }
+
     return $result;
+  }
+
+  public function selectAllTags() {
+    $sql = "SELECT * FROM `ma3_auto_tags` ORDER BY `id` DESC";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function selectAllEvents() {
+    $sql = "SELECT * FROM `ma3_auto_events`";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+
+  public function selectSpotlightEvents() {
+    $sql = "SELECT * FROM `ma3_auto_events` LIMIT 3";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function selectById($id) {
