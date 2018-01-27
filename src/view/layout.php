@@ -39,7 +39,7 @@
           <button><a  class="button button--header" href="index.php?page=programma">Ontdek ze allemaal</a></button>
         </article>
         <div class="chart">
-          <p class="counter" style="width:20vw">53 acties</p>
+          <p class="counter" style="width:<?php echo count($events);?>vw"><?php echo count($events);?> acties</p>
           <button type="button" name="button"><a class="button--cta" href="index.php?page=organiseren">+ Organiseer een actie</a></button>
         </div>
       </div>
@@ -82,11 +82,15 @@
           </ul>
         </div>
         <div class="newsletter">
-          <form action="index.php" method="post">
-            <h4 class="title title--footer white" for="nieuwsbrief">Ontvang de nieuwsbrief</h4>
-            <div class="">
-              <input class="input--footer" type="email" name="" value="" id="nieuwsbrief" required>
-              <button class="button button--footer" type="submit" name="button">></button>
+          <form class="newsletter-form" action="index.php" method="post">
+          <input type="hidden" name="action" value="insertEmail">
+            <div class="container--flex">
+              <h4 class="title title--footer white" for="nieuwsbrief">Ontvang de nieuwsbrief</h4>
+              <p class="info subtitle" data-success="Nice to meet you"></p>
+              <div>
+                <input class="input--footer" type="email" name="email"  id="nieuwsbrief" required>
+                <button class="button button--footer" type="submit" name="button">Inschrijven</button>
+              </div>
             </div>
           </form>
         </div>

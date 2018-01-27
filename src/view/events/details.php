@@ -26,7 +26,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOGEtKw0_1-5fJhqBTozZayRO
   <header class="event-header bgBlue">
     <div class="event-info bgBlueDark">
       <div class="content">
-        <p class="event-date subtitle white"><?php $dateStart = new DateTime($events[0]['start']); echo '<span>'.$dateStart->format('d').'</span>'; $dateEnd = new DateTime($events[0]['end']);if($dateStart->format('d') !== $dateEnd->format('d')){echo ' tot '.$dateEnd->format('d');} echo '</br><span class="month text"> september</span>'?></p>
+        <p class="event-date subtitle white"><?php $dateStart = new DateTime($events[0]['start']); echo '<span>'.$dateStart->format('d').'</span>'; $dateEnd = new DateTime($events[0]['end']);if($dateStart->format('d') !== $dateEnd->format('d')){echo ' tot '.$dateEnd->format('d');} echo '</br> september'?></p>
         <p class="event-time text blue"><?php $dateStart = new DateTime($events[0]['start']); echo $dateStart->format('h:s'); $dateEnd = new DateTime($events[0]['end']);if($dateStart->format('h:s') !== $dateEnd->format('h:s')){echo 'u - '.$dateEnd->format('h:s').'u';}?></p>
       </div>
     </div>

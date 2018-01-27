@@ -2,6 +2,7 @@
 
 require_once WWW_ROOT . 'controller' . DS . 'Controller.php';
 require_once WWW_ROOT . 'dao' . DS . 'EventDAO.php';
+require_once WWW_ROOT . 'dao' . DS . 'NewsletterDAO.php';
 
 class EventsController extends Controller {
 
@@ -9,11 +10,19 @@ class EventsController extends Controller {
 
   function __construct() {
     $this->eventDAO = new EventDAO();
+    $this->newsletterDAO = new NewsletterDAO();
   }
 
   public function index() {
     $this->set('currentPage', 'home');
-    $this->set('events', $this->eventDAO->selectSpotlightEvents());
+    $this->set('spotlightEvents', $this->eventDAO->selectSpotlightEvents());
+    $this->set('events', $this->eventDAO->selectAllEvents());
+
+    if (!empty($_POST['action'])) {
+      if ($_POST['action'] == 'insertEmail') {
+        $this->_handleInsertEmail();
+      }
+    }
   }
 
   public function programma() {
@@ -133,7 +142,6 @@ if(!empty($criteria['locatie'])){
     'value' => $criteria['locatie']
   );
 }
-// TODO: filteren op meerdere tags
 $this->_handleSetConditions($conditions);
 }
 
@@ -142,6 +150,38 @@ public function _handleSetConditions($conditions){
   $events = $this->eventDAO->search($conditions);
   if(!empty($events)){
     return $this->set('events', $events);
+  }
+}
+
+private function _handleInsertEmail() {
+  $data = array(
+    'email' => $_POST['email']
+  );
+  $insertScoreResult = $this->newsletterDAO->insert($data);
+  if (!$insertScoreResult) {
+    $errors = $this->newsletterDAO->validate($data);
+    $this->set('errors', $errors);
+    if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
+      header('Content-Type: application/json');
+      echo json_encode(array(
+        'result' => 'error',
+        'errors' => $errors
+      ));
+      exit();
+    }
+    $_SESSION['error'] = 'De score kon niet toegevoegd worden!';
+  } else {
+    if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
+      header('Content-Type: application/json');
+      echo json_encode(array(
+        'result' => 'ok',
+        'score' => $insertScoreResult
+      ));
+      exit();
+    }
+    $_SESSION['info'] = 'De score is toegevoegd!';
+    header('Location: index.php');
+    exit();
   }
 }
 }

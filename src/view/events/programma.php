@@ -4,8 +4,8 @@
       <h2 class="title white">Programma</h2>
       <div>
         <h3 class="subtitle">Verfijnresultaten</h3>
-        <form class="" action="" method="post">
-          <select class="" name="day">
+        <form class="programma-filters" action="" method="post">
+          <select class="filter-select" name="day">
             <option value="">Alle dagen</option>
             <option name="day" value="16" <?php if(!empty($_POST['day'])){if($_POST['day'] == 16){echo 'selected';}}?>>zondag 16 september</option>
             <option name="day" value="17" <?php if(!empty($_POST['day'])){if($_POST['day'] == 17){echo 'selected';}}?>>maandag 17 september</option>
@@ -15,14 +15,14 @@
             <option name="day" value="21" <?php if(!empty($_POST['day'])){if($_POST['day'] == 21){echo 'selected';}}?>>vrijdag 21 september</option>
             <option name="day" value="22" <?php if(!empty($_POST['day'])){if($_POST['day'] == 22){echo 'selected';}}?>>zaterdag 22 september</option>
           </select>
-          <select class="" name="tag">
+          <select class="filter-select" name="tag">
             <option value="">Select filter</option>
             <?php foreach($tags as $tag):?>
             <option name="tag" value="<?php echo $tag['tag'];?>" <?php if(!empty($_POST['tag'])){if($_POST['tag'] == $tag['tag']){echo 'selected';}}?>><?php echo $tag['tag']?> </option>
             <? endforeach;?>
             </select>
-            <input type="text" name="locatie" value="<?php if(!empty($_POST['locatie'])){echo $_POST['locatie'];}?>">
-            <input type="submit" value="Zoek!">
+            <input class="filter-input" type="text" name="locatie" value="<?php if(!empty($_POST['locatie'])){echo $_POST['locatie'];}?>">
+            <input class="filter-input filter-submit" type="submit" value="Zoek!">
           </div>
         </form>
       </div>

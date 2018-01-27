@@ -4,7 +4,7 @@
       <h2 class="title blue">Populaire acties & activiteiten</h2>
     </header>
     <ul class="list">
-      <?php foreach($events as $event): ?>
+      <?php foreach($spotlightEvents as $event): ?>
       <a class="section-item" href="index.php?page=details&id=<?php echo $event['id'];?>">
         <li class="list-item" style="background-image: url(./assets/images/<?php echo $event['code'];?>/1.jpg)">
           <div class="item bgBlueDark">
