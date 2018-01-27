@@ -18,6 +18,8 @@
     s.parentNode.insertBefore(wf, s);
   })(document);
   </script>
+  <script>
+  </script>
   <script async src="https://stevesouders.com/bin/sleep.cgi?type=js&sleep=5&expires=-1&last=0"></script>
     <?php echo $css;?>
   </head>

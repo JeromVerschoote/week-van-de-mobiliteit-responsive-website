@@ -374,6 +374,7 @@ footer .bottom{
 section{
   background: white;
   overflow: hidden;
+  margin-top: 5rem;
 
   & .content{
     padding: 1.5rem 3rem;
@@ -504,31 +505,96 @@ section{
 
 .event{
 
-  & header{
-    display: flex;
+  & .text--small{
+    font-size: 1rem;
   }
-
-  & .left{
-    width: 25%;
-  }
-
-  & .info{
-    padding: 2rem 5rem;
-  }
-
-  & .info p{
-    padding-top: 1rem;
-  }
-
   & img{
     width: 100%;
     border-radius: 0 0 3rem 3rem;
   }
+}
 
-  & h4{
-    padding: 1rem 0;
+.event-header{
+  display: flex;
+  flex-flow: column;
+}
+
+.event-date{
+
+  & span{
+    font-size: 5vw;
   }
 
+   & .month{
+     font-size: 2rem;
+   }
+}
+
+.event-time{
+  font-size: 1.2rem;
+  padding-top: 1rem;
+}
+
+.event-link{
+  font-size: 1.2rem;
+}
+
+.event-organisers{
+  display: flex;
+  flex-wrap: wrap;
+
+  & .event-organiser{
+    padding: .5rem;
+    padding-left: 0;
+    font-size: 1.2rem;
+    opacity: .5;
+  }
+}
+
+.event-location{
+  padding: 2rem 0;
+}
+
+.event-tags{
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+
+  & .event-tag{
+    padding: .5rem 1rem;
+    margin: .5rem;
+    font-size: 1.2rem;
+    opacity: .7;
+    border-radius: .5rem;
+    background: var(--color-primairy-blue-dark);
+    transition: .2s;
+
+    &:hover{
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+}
+
+.event-info{
+  order: 1;
+}
+
+.event-image{
+  height: 20vh;
+  border-radius: 0 0 3rem 3rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.event-article{
+  padding: 3rem 2rem;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+.event-title{
+  padding-bottom: 2rem;
 }
 
 /* RESPONSIVE */
@@ -663,6 +729,10 @@ section{
     }
   }
 
+  section {
+    margin-top: 0;
+  }
+
   .verhalen .list{
     flex-flow: column;
   }
@@ -699,6 +769,24 @@ section{
       margin-left: -10rem;
       transition: .2s;
     }
+  }
+
+  .event-header{
+    flex-flow: row;
+    background: red;
+  }
+
+  .event-info{
+    max-width: 20rem;
+    order: 0;
+  }
+
+  .event-image{
+    height: 50vh;
+  }
+
+  .event-beschrijving {
+    display: flex;
   }
 }
 

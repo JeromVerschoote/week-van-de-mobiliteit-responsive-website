@@ -60,7 +60,7 @@ class EventsController extends Controller {
         $this->_handleFilter($criteria);
       }
     }else{
-      // redirect to home page
+      // redirect to home
     }
 
     /*if(!empty($_GET['id'])){

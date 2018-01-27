@@ -1,54 +1,70 @@
+<script>
+const loadCoordinates = (straat, stad, land, postcode) => {
+  fetch(`https:maps.googleapis.com/maps/api/geocode/json?address=${straat},${stad},+${land},+${postcode}&key=AIzaSyDOGEtKw0_1-5fJhqBTozZayROxyqqCSSM`)
+    .then(r => r.json())
+    .then(json => initMap(json.results[0].geometry.location.lat, json.results[0].geometry.location.lng));
+};
+
+loadCoordinates('<?php echo $events[0]['address']?>', '<?php echo $events[0]['city'] ?>', 'België', '<?php echo $events[0]['postal']?>');
+
+function initMap(x, y) {
+  var uluru = {lat: x, lng: y};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 14,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOGEtKw0_1-5fJhqBTozZayROxyqqCSSM&callback=initMap">
+</script>
 <section class="uitgelicht programma event">
-  <header class="bgBlue">
-    <div class="left bgBlueDark">
+  <header class="event-header bgBlue">
+    <div class="event-info bgBlueDark">
       <div class="content">
-        <p class="subtitle"><?php $dateStart = new DateTime($events[0]['start']); echo $dateStart->format('d m H:i');?> - <?php $dateEnd = new DateTime($events[0]['end']); echo $dateEnd->format('d m H:i');?></p>
-        <ul class="text"><?php foreach($events[0]['tags'] as $tag): ?><li><?php echo $tag['tag'];?></li><?php endforeach; // TODO: tags & organisators laden uit database (gelinkte kolommen)?></ul>
-        </div>
+        <p class="event-date subtitle white"><?php $dateStart = new DateTime($events[0]['start']); echo '<span>'.$dateStart->format('d').'</span>'; $dateEnd = new DateTime($events[0]['end']);if($dateStart->format('d') !== $dateEnd->format('d')){echo ' tot '.$dateEnd->format('d');} echo '</br><span class="month text"> september</span>'?></p>
+        <p class="event-time text blue"><?php $dateStart = new DateTime($events[0]['start']); echo $dateStart->format('h:s'); $dateEnd = new DateTime($events[0]['end']);if($dateStart->format('h:s') !== $dateEnd->format('h:s')){echo 'u - '.$dateEnd->format('h:s').'u';}?></p>
       </div>
-      <div class="right">
-        <div class="content">
-          <h2 class="title white"><?php echo $events[0]['title']; ?></h2>
-          <ul class="text blueDark">
-          </ul>
-            <div class="info">
-              <p class="subtitle blueDark"><?php echo $events[0]['location'];?></p>
-              <h3 class="text blueDark"><?php echo $events[0]['address'];?>, <?php echo $events[0]['postal'];?> <?php echo $events[0]['city'];?></h3>
-              <p class="text blueDark"><a href="<?php echo $events[0]['link'];?>"><?php echo $events[0]['link'];?></a></p>
-            </div>
-          </div>
-        </div>
-      </header>
-      <img src="./assets/images/<?php echo $events[0]['code']?>/1.jpg" alt="event-image">
+    </div>
+    <div>
       <div class="content">
-        <h4 class="subtitle blueDark">Beschrijving</h4>
-        <p><?php echo $events[0]['content'];?></p>
+        <h2 class="event-title title white"><?php echo $events[0]['title']; ?></h2>
+        <ul class="event-organisers text"><?php foreach($events[0]['organisers'] as $organiser): echo '<li class="event-organiser">'.$organiser['name'].'</li>'; endforeach;?></ul>
+        <p class="event-location text blueDark"><span class="subtitle"><?php echo $events[0]['location'];?></span></br><?php if($events[0]['address'] !== 'Diverse locaties'){echo $events[0]['address'].', '.$events[0]['postal'].' '.$events[0]['city'];}?></p>
+        <p class="event-link text blueDark"><a href="<?php echo $events[0]['link'];?>"><?php echo $events[0]['link'];?></a></p>
+        <ul class="event-tags text white"><?php foreach($events[0]['tags'] as $tag): echo '<li class="event-tag">'.$tag['tag'].'</li>'; endforeach;?></ul>
+      </div>
+    </div>
+  </header>
+  <div class="event-image" style="background-image: url(./assets/images/<?php echo $events[0]['code']?>/1.jpg)"></div>
+  <div class="content event-beschrijving">
+    <article class="event-article">
+      <h4 class="event-title subtitle blueDark">Beschrijving</h4>
+      <p ><?php echo $events[0]['content'];?></p>
+    </article>
+
+    <?php if(!empty($events[0]['practical'])){?>
+      <article class="event-article orderSwapped">
+        <h4 class="event-title subtitle blueDark">Praktisch</h4>
+        <?}?>
         <?php if(!empty($events[0]['practical'])){?>
-          <h4 class="subtitle blueDark">Praktisch</h4>
-          <p><?php echo $events[0]['practical'];?></p>
-        <?php } ?>
-      </div>
-      <style>
-      #map {
-        height: 400px;
-        width: 100%;
-      }
-      </style>
-      <div id="map"></div>
-      <script>
-      function initMap() {
-        var uluru = {lat: 50.835983, lng: 3.255449};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-      </script>
-      <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOGEtKw0_1-5fJhqBTozZayROxyqqCSSM&callback=initMap">
-      </script>
-    </section>
+        <p><?php echo $events[0]['practical'];?></p>
+      </article>
+
+      <?}?>
+  </div>
+  <?php if($events[0]['address'] !== 'Diverse locaties'){?>
+  <div class="event-map" id="map"></div>
+  <?}?>
+  <style>
+  #map {
+    height: 400px;
+    width: 100%;
+    border-radius: 3rem 3rem 0 0;
+  }
+  </style>
+</section>

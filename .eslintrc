@@ -10,7 +10,7 @@
     "Headers": true,
     "FormData": true,
     "google": true,
-    
+    "marker": true
   },
 
   "parser": "babel-eslint",
