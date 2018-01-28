@@ -27,33 +27,48 @@ class EventsController extends Controller {
 
   public function programma() {
 
-    if(!empty($_POST)){
-      if(!empty($_POST['title'])){
-        $criteria['title'] = $_POST['title'];
+    if(!empty($_GET)){
+      if(!empty($_GET['title'])){
+        $criteria['title'] = $_GET['title'];
       }
-      if(!empty($_POST['organiserId'])){
-        $criteria['organiserId'] = $_POST['organiserId'];
+      if(!empty($_GET['organiserId'])){
+        $criteria['organiserId'] = $_GET['organiserId'];
       }
-      if(!empty($_POST['organiserName'])){
-        $criteria['organiserName'] = $_POST['organiserName'];
+      if(!empty($_GET['organiserName'])){
+        $criteria['organiserName'] = $_GET['organiserName'];
       }
-      if(!empty($_POST['tag'])){
-        $criteria['tag'] = $_POST['tag'];
+      if(!empty($_GET['tag'])){
+        $criteria['tag'] = $_GET['tag'];
       }
-      if(!empty($_POST['day'])){
-        $criteria['day'] = $_POST['day'];
+      if(!empty($_GET['day'])){
+        $criteria['day'] = $_GET['day'];
       }
-      if(!empty($_POST['locatie'])){
-        $criteria['locatie'] = $_POST['locatie'];
+      if(!empty($_GET['locatie'])){
+        $criteria['locatie'] = $_GET['locatie'];
       }
-
       if(!empty($criteria)){
         $this->_handleFilter($criteria);
       }else{
-        $this->set('events', $this->eventDAO->selectAllEvents());
+        $events = $this->eventDAO->selectAllEvents();
+
+        if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
+          header('Content-Type: application/json');
+          echo json_encode($events);
+          exit();
+        }
+
+        $this->set('events', $events);
       }
     }else{
-      $this->set('events', $this->eventDAO->selectAllEvents());
+      $events = $this->eventDAO->selectAllEvents();
+
+      if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
+        header('Content-Type: application/json');
+        echo json_encode($events);
+        exit();
+      }
+
+      $this->set('events', $events);
     }
 
     $this->set('currentPage', 'programma');
@@ -67,14 +82,11 @@ class EventsController extends Controller {
       if(!empty($_GET['id'])){
         $criteria['id'] = $_GET['id'];
         $this->_handleFilter($criteria);
+      }else{
+        $_GET['page'] = 'home';
+        header('Location: index.php');
       }
-    }else{
-      // redirect to home
     }
-
-    /*if(!empty($_GET['id'])){
-    $this->set('event', $this->eventDAO->selectById($_GET['id']));
-  }*/
 }
 
 public function _handleFilter($criteria){
@@ -148,9 +160,13 @@ $this->_handleSetConditions($conditions);
 public function _handleSetConditions($conditions){
 
   $events = $this->eventDAO->search($conditions);
-  if(!empty($events)){
-    return $this->set('events', $events);
+
+  if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
+    header('Content-Type: application/json');
+    echo json_encode($events);
+    exit();
   }
+  return $this->set('events', $events);
 }
 
 private function _handleInsertEmail() {
