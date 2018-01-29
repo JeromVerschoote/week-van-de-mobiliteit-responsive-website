@@ -7,9 +7,9 @@
     <script>
     WebFontConfig = {
       custom: {
-      families: ['cocogoose'],
-      urls: ['./css/fonts.css']
-    }
+        families: ['cocogoose', 'gotham', 'gotham light'],
+        urls: ['css/fonts.css']
+      }
   };
   (function(d) {
     var wf = d.createElement('script'), s = d.scripts[0];

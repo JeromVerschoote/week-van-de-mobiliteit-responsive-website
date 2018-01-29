@@ -897,7 +897,7 @@ section {
       padding: 1rem;
       width: 5vw;
       margin-left: 75rem;
-      margin-top: -3vh;
+      margin-top: -3rem;
       border-radius: 5rem;
       background: var(--color-primairy-blue-dark);
     }
@@ -912,7 +912,7 @@ section {
       padding: 1.7rem;
       width: 5vw;
       margin-left: 7rem;
-      margin-top: 56vh;
+      margin-top: 50rem;
       border-radius: 5rem;
       background: var(--color-primairy-green-dark);
     }
@@ -927,7 +927,7 @@ section {
       padding: 1.7rem;
       width: 5vw;
       margin-left: -5rem;
-      margin-top: 32.5vh;
+      margin-top: 32.5rem;
       border-radius: 5rem;
       background: var(--color-primairy-yellow-dark);
     }
@@ -939,10 +939,10 @@ section {
       content: url(../assets/images/organiseren.svg);
       position: absolute;
       height: 5vw;
-      padding: 1.7rem;
+      padding: 2rem;
       width: 5vw;
       margin-left: 7rem;
-      margin-top: 23vh;
+      margin-top: 19rem;
       border-radius: 5rem;
       background: var(--color-primairy-blue-dark);
     }
@@ -957,7 +957,7 @@ section {
       padding: 1.7rem;
       width: 5vw;
       margin-left: 7rem;
-      margin-top: 23vh;
+      margin-top: 19rem;
       border-radius: 5rem;
       background: var(--color-primairy-yellow-dark);
     }
