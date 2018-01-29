@@ -3,6 +3,7 @@
 require_once WWW_ROOT . 'controller' . DS . 'Controller.php';
 require_once WWW_ROOT . 'dao' . DS . 'EventDAO.php';
 require_once WWW_ROOT . 'dao' . DS . 'NewsletterDAO.php';
+require_once WWW_ROOT . 'dao' . DS . 'StoriesDAO.php';
 
 class EventsController extends Controller {
 
@@ -11,12 +12,14 @@ class EventsController extends Controller {
   function __construct() {
     $this->eventDAO = new EventDAO();
     $this->newsletterDAO = new NewsletterDAO();
+    $this->storiesDAO = new StoriesDAO();
   }
 
   public function index() {
     $this->set('currentPage', 'home');
     $this->set('spotlightEvents', $this->eventDAO->selectSpotlightEvents());
     $this->set('events', $this->eventDAO->selectAllEvents());
+    $this->set('stories', $this->storiesDAO->selectSpotlighStories());
 
     if (!empty($_POST['action'])) {
       if ($_POST['action'] == 'insertEmail') {
@@ -26,6 +29,11 @@ class EventsController extends Controller {
   }
 
   public function programma() {
+    if (!empty($_POST['action'])) {
+      if ($_POST['action'] == 'insertEmail') {
+        $this->_handleInsertEmail();
+      }
+    }
 
     if(!empty($_GET)){
       if(!empty($_GET['title'])){
@@ -76,7 +84,11 @@ class EventsController extends Controller {
   }
 
   public function details() {
-    $this->set('currentPage', 'details');
+    if (!empty($_POST['action'])) {
+      if ($_POST['action'] == 'insertEmail') {
+        $this->_handleInsertEmail();
+      }
+    }
 
     if(!empty($_GET)){
       if(!empty($_GET['id'])){
@@ -87,66 +99,69 @@ class EventsController extends Controller {
         header('Location: index.php');
       }
     }
-}
 
-public function _handleFilter($criteria){
-  if(!empty($criteria['id'])){
-    $conditions[] = array(
-      'field' => 'id',
-      'comparator' => '=',
-      'value' => $criteria['id']
-    );
+    $this->set('currentPage', 'details');
+    $this->set('spotlightEvents', $this->eventDAO->selectSpotlightEvents());
   }
-  if(!empty($criteria['title'])){
-    $conditions[] = array(
-      'field' => 'title',
-      'comparator' => 'like',
-      'value' => $criteria['title']
-    );
-  }
-  if(!empty($criteria['organiserId'])){
-    $conditions[] = array(
-      'field' => 'organiser_id',
-      'comparator' => '=',
-      'value' => $criteria['organiserId']
-    );
-  }
-  if(!empty($criteria['organiserName'])){
-    $conditions[] = array(
-      'field' => 'organiser',
-      'comparator' => 'like',
-      'value' => $criteria['organiserName']
-    );
-  }
-  if(!empty($criteria['tag'])){
+
+  public function _handleFilter($criteria){
+    if(!empty($criteria['id'])){
+      $conditions[] = array(
+        'field' => 'id',
+        'comparator' => '=',
+        'value' => $criteria['id']
+      );
+    }
+    if(!empty($criteria['title'])){
+      $conditions[] = array(
+        'field' => 'title',
+        'comparator' => 'like',
+        'value' => $criteria['title']
+      );
+    }
+    if(!empty($criteria['organiserId'])){
+      $conditions[] = array(
+        'field' => 'organiser_id',
+        'comparator' => '=',
+        'value' => $criteria['organiserId']
+      );
+    }
+    if(!empty($criteria['organiserName'])){
+      $conditions[] = array(
+        'field' => 'organiser',
+        'comparator' => 'like',
+        'value' => $criteria['organiserName']
+      );
+    }
+    if(!empty($criteria['tag'])){
       $conditions[] = array(
         'field' => 'tag',
         'comparator' => '=',
         'value' => $criteria['tag']
       );
+    }
+    if(!empty($criteria['day'])){
+      /*$conditions[] = array(
+      'field' => 'start',
+      'comparator' => '>=',
+      'value' => '2018-09-'.$date.' 00:00:00'
+    );
+    $conditions[] = array(
+    'field' => 'end',
+    'comparator' => '<=',
+    'value' => '2018-09-'.$date.' 23:59:59'
+    );*/
+    $conditions[] = array(
+      'field' => 'start',
+      'comparator' => '<=',
+      'value' => '2018-09-'.$criteria['day'].' 23:59:59'
+    );
+    $conditions[] = array(
+      'field' => 'end',
+      'comparator' => '>=',
+      'value' => '2018-09-'.$criteria['day'].' 00:00:00'
+    );
   }
-  if(!empty($criteria['day'])){
-    /*$conditions[] = array(
-    'field' => 'start',
-    'comparator' => '>=',
-    'value' => '2018-09-'.$date.' 00:00:00'
-  );
-  $conditions[] = array(
-  'field' => 'end',
-  'comparator' => '<=',
-  'value' => '2018-09-'.$date.' 23:59:59'
-);*/
-$conditions[] = array(
-  'field' => 'start',
-  'comparator' => '<=',
-  'value' => '2018-09-'.$criteria['day'].' 23:59:59'
-);
-$conditions[] = array(
-  'field' => 'end',
-  'comparator' => '>=',
-  'value' => '2018-09-'.$criteria['day'].' 00:00:00'
-);
-}
 if(!empty($criteria['locatie'])){
   $conditions[] = array(
     'field' => 'city',
@@ -185,7 +200,7 @@ private function _handleInsertEmail() {
       ));
       exit();
     }
-    $_SESSION['error'] = 'De score kon niet toegevoegd worden!';
+    $_SESSION['error'] = 'Je email-adres kon niet toegevoegd worden!';
   } else {
     if (strtolower($_SERVER['HTTP_ACCEPT']) == 'application/json') {
       header('Content-Type: application/json');
@@ -195,7 +210,7 @@ private function _handleInsertEmail() {
       ));
       exit();
     }
-    $_SESSION['info'] = 'De score is toegevoegd!';
+    $_SESSION['info'] = 'Je email-adres is toegevoegd!';
     header('Location: index.php');
     exit();
   }

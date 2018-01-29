@@ -29,7 +29,7 @@
         <?php if(!empty($_SESSION['info'])): ?><div class="alert alert-success"><?php echo $_SESSION['info'];?></div><?php endif; ?>
         <?php if(!empty($_SESSION['error'])): ?><div class="alert alert-danger"><?php echo $_SESSION['error'];?></div><?php endif; ?>
       </div>
-      <div class="banner <?php if($currentPage !== 'home') echo 'hidden';?>">
+      <div class="banner <?php if($currentPage !== 'home'){echo 'hidden';} ?>">
         <article>
           <header>
             <h1 class="title title--header white">Week van de Mobiliteit</h1>
@@ -43,30 +43,37 @@
           <button type="button" name="button"><a class="button--cta" href="index.php?page=organiseren">+ Organiseer een actie</a></button>
         </div>
       </div>
-      <nav class="menu menu--primairy <?php if($currentPage !== 'home') echo 'menu--show';?>">
+      <nav class="menu menu--primairy <?php if($currentPage !== 'home') {echo 'menu--show';} if($currentPage == 'details') {echo ' menu--block';}?>">
         <ul class="menu-list">
-          <li><a class="link--header <?php if($currentPage == 'home') echo 'link--header--active';?>" href="index.php">Home</a></li>
-          <li><a class="link--header <?php if($currentPage == 'over') echo 'link--header--active';?>" href="index.php?page=over">Over</a></li>
-          <li><a class="link--header <?php if($currentPage == 'programma') echo 'link--header--active';?>" href="index.php?page=programma">Programma</a></li>
-          <li><a class="link--header <?php if($currentPage == 'instafeed') echo 'link--header--active';?>" href="index.php?page=instafeed">#weekvandemobiliteit</a></li>
-          <li><a class="link--header <?php if($currentPage == 'organiseren') echo 'link--header--active';?>" href="index.php?page=organiseren">Organiseren</a></li>
-          <li><a class="link--header <?php if($currentPage == 'steunen') echo 'link--header--active';?>" href="index.php?page=steunen">Steunen</a></li>
+          <li><a class="link--header <?php if($currentPage == 'home'){echo 'link--header--active';} ?>" href="index.php">Home</a></li>
+          <li><a class="link--header <?php if($currentPage == 'over'){echo 'link--header--active';} ?>" href="index.php?page=over">Over</a></li>
+          <li><a class="link--header <?php if($currentPage == 'programma'){echo 'link--header--active';} ?>" href="index.php?page=programma">Programma</a></li>
+          <li><a class="link--header <?php if($currentPage == 'instafeed'){echo 'link--header--active';} ?>" href="index.php?page=instafeed">#weekvandemobiliteit</a></li>
+          <li><a class="link--header <?php if($currentPage == 'organiseren'){echo 'link--header--active';} ?>" href="index.php?page=organiseren">Organiseren</a></li>
+          <li><a class="link--header <?php if($currentPage == 'steunen'){echo 'link--header--active';} ?>" href="index.php?page=steunen">Steunen</a></li>
         </ul>
       </nav>
+      <?php if($currentPage == 'details'){ ?>
+      <nav class="menu menu--tertiariy">
+        <div class="">
+          <p><a href="index.php">Home</a> > <a href="index.php?page=programma">Programma</a> > <?php echo $events[0]['title']; ?></p>
+        </div>
+      </nav>
+    <?php } ?>
     </header>
     <nav class="menu menu--secundairy">
       <ul class="menu-list">
-        <a class="link--date bgBlue<?php if($currentPage == '16/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">zondag 16</p><p class="text--date yellow">septemer</p></li></a>
-        <a class="link--date bgYellow<?php if($currentPage == '17/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">maandag 17</p><p class="text--date green">septemer</p></li></a>
-        <a class="link--date bgGreen<?php if($currentPage == '18/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">dinsdag 18</p><p class="text--date blue">septemer</p></li></a>
-        <a class="link--date bgBlue<?php if($currentPage == '19/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">woensdag 19</p><p class="text--date yellow">septemer</p></li></a>
-        <a class="link--date bgYellow<?php if($currentPage == '20/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">donderdag 20</p><p class="text--date green">septemer</p></li></a>
-        <a class="link--date bgGreen<?php if($currentPage == '21/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">vrijdag 21</p><p class="text--date blue">septemer</p></li></a>
-        <a class="link--date bgBlue<?php if($currentPage == '22/09') echo 'link--date--active';?>" href="index.php"><li><p class="subtitle">zaterdag 22</p><p class="text--date yellow">septemer</p></li></a>
+        <a class="link--date bgBlue<?php if($currentPage == '16/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">zondag 16</p><p class="text--date yellow">septemer</p></li></a>
+        <a class="link--date bgYellow<?php if($currentPage == '17/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">maandag 17</p><p class="text--date green">septemer</p></li></a>
+        <a class="link--date bgGreen<?php if($currentPage == '18/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">dinsdag 18</p><p class="text--date blue">septemer</p></li></a>
+        <a class="link--date bgBlue<?php if($currentPage == '19/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">woensdag 19</p><p class="text--date yellow">septemer</p></li></a>
+        <a class="link--date bgYellow<?php if($currentPage == '20/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">donderdag 20</p><p class="text--date green">septemer</p></li></a>
+        <a class="link--date bgGreen<?php if($currentPage == '21/09'){echo 'link--date--active';} ?>" href="index.php"><li><p class="subtitle">vrijdag 21</p><p class="text--date blue">septemer</p></li></a>
+        <a class="link--date bgBlue<?php if($currentPage == '22/09'){echo 'link--date--active';}; ?>" href="index.php"><li><p class="subtitle">zaterdag 22</p><p class="text--date yellow">septemer</p></li></a>
       </ul>
     </nav>
     <main>
-        <div class="<?php echo $currentPage?>-container">
+        <div class="<?php echo $currentPage; ?>-container">
           <?php echo $content; ?>
         </div>
     </main>
@@ -86,7 +93,7 @@
           <input type="hidden" name="action" value="insertEmail">
             <div class="container--flex">
               <h4 class="title title--footer white" for="nieuwsbrief">Ontvang de nieuwsbrief</h4>
-              <p class="info subtitle" data-success="Nice to meet you"></p>
+              <p class="info subtitle error--text" data-success=""></p>
               <div>
                 <input class="input--footer" type="email" name="email"  id="nieuwsbrief" required>
                 <button class="button button--footer" type="submit" name="button">Inschrijven</button>

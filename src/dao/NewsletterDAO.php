@@ -24,7 +24,7 @@ class NewsletterDAO extends DAO {
     return false;
   }
 
-  public function validate( $data ){
+  public function validate($data){
     $errors = [];
     if (!isset($data['email'])) {
       $errors['email'] = 'Gelieve user in te vullen';

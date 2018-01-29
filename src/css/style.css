@@ -5,6 +5,11 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   height: 100%;
+
+  /* hover glitch fix */
+  -webkit-backface-visibility: hidden;  /* stylelint-disable-line */
+  -webkit-transform: translateZ(0) scale(1.0, 1.0); /* stylelint-disable-line */
+  transform: translateZ(0); /* stylelint-disable-line */
 }
 
 *, *:before, *:after { /* stylelint-disable-line */
@@ -23,7 +28,7 @@ body {
   color: var(--color-text);
   font-size: 1.4rem;
   line-height: 1.3;
-  background: url(../assets/images/pattern.jpg) var(--color-secundairy);
+  background: url(../assets/images/pattern.webp) var(--color-secundairy);
   background-blend-mode: multiply;
 }
 
@@ -86,6 +91,9 @@ a {
   transition: .1s;
   color: var(--color-link);
   cursor: pointer;
+
+  /* weird hover glitch fix */
+
 }
 
 .link--header {
@@ -144,6 +152,7 @@ select {
 .input--footer {
   height: 2.5rem;
   width: 15vw;
+  min-width: 15rem;
   padding: 1rem;
 }
 
@@ -231,6 +240,18 @@ button {
   height: 14vh;
 }
 
+.icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 1rem;
+}
+
+.container--flex-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 /* LAYOUT */
 
 .header {
@@ -255,7 +276,7 @@ button {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  background: url(../assets/images/banner.jpg);
+  background: url(../assets/images/banner.webp);
   background-position: center;
   background-size: cover;
   overflow: hidden;
@@ -326,6 +347,27 @@ button {
   & .menu-list {
     display: flex;
     justify-content: space-around;
+  }
+}
+
+.menu--tertiariy {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  width: 100vw;
+  border-radius: 0 0 3rem 3rem;
+  background: #bcbbbc;
+  z-index: 2;
+
+  & div {
+    display: flex;
+    justify-content: flex-start;
+    width: 96rem;
+  }
+
+  & a:hover {
+    color: var(--color-primairy-blue);
   }
 }
 
@@ -460,8 +502,15 @@ section {
   flex-flow: column;
   justify-content: space-between;
 
+  background-position: center;
+  background-size: cover;
+
   & .content {
     flex-grow: 2;
+  }
+
+  & .title {
+    font-size: 2.2rem;
   }
 }
 
@@ -522,11 +571,6 @@ section {
   & .text--small {
     font-size: 1rem;
   }
-
-  & img {
-    width: 100%;
-    border-radius: 0 0 3rem 3rem;
-  }
 }
 
 .event-header {
@@ -537,7 +581,7 @@ section {
 .event-date {
 
   & span {
-    font-size: 5vw;
+    font-size: 3vw;
   }
 
   &.month {
@@ -552,11 +596,13 @@ section {
 
 .event-link {
   font-size: 1.2rem;
+  padding-bottom: 1rem;
 }
 
 .event-organisers {
   display: flex;
   flex-wrap: wrap;
+  text-transform: uppercase;
 
   & .event-organiser {
     padding: .5rem;
@@ -573,7 +619,6 @@ section {
 .event-tags {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 2rem;
 
   & .event-tag {
     padding: .5rem 1rem;
@@ -608,8 +653,15 @@ section {
   text-align: justify;
 }
 
-.event-title {
-  padding-bottom: 2rem;
+.meer {
+  border-radius: 0 3rem 3rem 0;
+  border-top: 0;
+  border-left: 10px solid var(--color-primairy-yellow);
+  margin-top: 5rem;
+
+  &::before {
+    display: none;
+  }
 }
 
 /* RESPONSIVE */
@@ -691,6 +743,7 @@ section {
     & .menu-list {
       display: flex;
       justify-content: space-around;
+      margin-top: 2rem;
     }
 
     & .link--header {
@@ -702,6 +755,15 @@ section {
   .menu--secundairy {
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .menu--tertiariy {
+    display: flex;
+
+    & div {
+      padding-left: 5rem;
+    }
   }
 
   footer .top {
@@ -753,7 +815,7 @@ section {
   }
 
   .verhalen .list-item {
-    height: 10rem;
+    height: 12rem;
     overflow: hidden;
 
     &:hover .item {
@@ -803,6 +865,11 @@ section {
   .event-beschrijving {
     display: flex;
   }
+
+  .menu--block {
+    border-radius: 0;
+    background: var(--color-secundairy-dark);
+  }
 }
 
 @media only screen and (min-width: 1024px) {
@@ -819,6 +886,81 @@ section {
 
   footer .bottom {
     border-radius: 5rem 5rem 0 0;
+  }
+
+  .uitgelicht {
+
+    &::before {
+      content: url(../assets/images/mic.svg);
+      position: absolute;
+      height: 5vw;
+      padding: 1rem;
+      width: 5vw;
+      margin-left: 75rem;
+      margin-top: -3vh;
+      border-radius: 5rem;
+      background: var(--color-primairy-blue-dark);
+    }
+  }
+
+  .verhalen {
+
+    &::before {
+      content: url(../assets/images/verhalen.svg);
+      position: absolute;
+      height: 5vw;
+      padding: 1.7rem;
+      width: 5vw;
+      margin-left: 7rem;
+      margin-top: 56vh;
+      border-radius: 5rem;
+      background: var(--color-primairy-green-dark);
+    }
+  }
+
+  .instafeed {
+
+    &::before {
+      content: url(../assets/images/instagramIcon.svg);
+      position: absolute;
+      height: 5vw;
+      padding: 1.7rem;
+      width: 5vw;
+      margin-left: -5rem;
+      margin-top: 32.5vh;
+      border-radius: 5rem;
+      background: var(--color-primairy-yellow-dark);
+    }
+  }
+
+  .organiseren {
+
+    &::before {
+      content: url(../assets/images/organiseren.svg);
+      position: absolute;
+      height: 5vw;
+      padding: 1.7rem;
+      width: 5vw;
+      margin-left: 7rem;
+      margin-top: 23vh;
+      border-radius: 5rem;
+      background: var(--color-primairy-blue-dark);
+    }
+  }
+
+  .steunen {
+
+    &::before {
+      content: url(../assets/images/steun.svg);
+      position: absolute;
+      height: 5vw;
+      padding: 1.7rem;
+      width: 5vw;
+      margin-left: 7rem;
+      margin-top: 23vh;
+      border-radius: 5rem;
+      background: var(--color-primairy-yellow-dark);
+    }
   }
 }
 

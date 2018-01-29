@@ -6,14 +6,14 @@
     <ul class="list">
       <?php foreach($spotlightEvents as $event): ?>
       <a class="section-item" href="index.php?page=details&id=<?php echo $event['id'];?>">
-        <li class="list-item" style="background-image: url(./assets/images/<?php echo $event['code'];?>/1.jpg)">
+        <li class="list-item" style="background-image: url(./assets/images/<?php echo $event['code'];?>/1.webp)">
           <div class="item bgBlueDark">
-            <h3 class="subtitle white"><?php echo $event['title'];?></h3>
-            <p class="text--date blue"><?php echo $event['city'];?></p>
+            <h3 class="subtitle white"><?php echo $event['title']; ?></h3>
+            <p class="text--date blue"><?php echo $event['city']; ?></p>
           </div>
         </li>
       </a>
-      <? endforeach;?>
+    <?php endforeach;?>
     </ul>
   </div>
   <a href="index.php?page=programma">
@@ -29,30 +29,16 @@
       <h2 class="title green">Verhalen</h2>
     </header>
     <ul class="list">
-      <a class="section-item" href="#">
-        <li class="list-item"  style="background: url(./assets/images/banner.jpg)">
+      <?php foreach($stories as $story):?>
+      <a class="section-item" href="index.php?page=stories&id=<?php echo $story['id'];?>">
+        <li class="list-item"  style="background: url(./assets/images/<?php echo $story['code'];?>/1.webp)">
           <div class="item bgGreenDark">
-            <h3 class="subtitle white">Autovrije zondag</h3>
-            <p class="text--date green">zondag 10 september</p>
+            <h3 class="subtitle white"><?php echo $story['title'];?></h3>
+            <p class="text--date green"><?php $date = new DateTime($story['created']); echo $date->format('d').' september';?></p>
           </div>
         </li>
       </a>
-      <a class="section-item" href="#">
-        <li class="list-item"  style="background: url(./assets/images/banner.jpg)">
-          <div class="item bgGreenDark">
-            <h3 class="subtitle white">Autovrije zondag</h3>
-            <p class="text--date green">zondag 10 september</p>
-          </div>
-        </li>
-      </a>
-      <a class="section-item" href="#">
-        <li class="list-item" style="background: url(./assets/images/banner.jpg)">
-          <div class="item bgGreenDark">
-            <h3 class="subtitle white">Autovrije zondag</h3>
-            <p class="text--date green">zondag 10 september</p>
-          </div>
-        </li>
-      </a>
+    <?php endforeach;?>
     </ul>
   </div>
   <a href="#">
@@ -62,7 +48,7 @@
   </a>
 </section>
 
-<section class="instafeed" style="background: url(./assets/images/banner.jpg)">
+<section class="instafeed" style="background: url(./assets/images/instafeed.webp)">
   <div class="content">
     <header>
       <h2 class="title yellow">#weekdemobiliteit</h2>
